@@ -4,7 +4,7 @@ require 'yaml'
 
 module Panda
   class << self
-    attr_accessor :account_key, :api_domain, :api_port, :default_encoding_profile
+    attr_accessor :account_key, :api_domain, :api_port, :default_encoding_profile, :verbose
   
     def api_port
       @api_port ||= 80
@@ -79,8 +79,10 @@ module Panda
         response = http.request(req)
       end
   
-      puts "--> #{response.code} #{response.message} (#{response.body.length})"
-      puts response.body
+      if Panda.verbose
+        puts "--> #{response.code} #{response.message} (#{response.body.length})"
+        puts response.body
+      end
       handle_response(response)
     end
 
